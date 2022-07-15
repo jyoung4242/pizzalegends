@@ -5,6 +5,7 @@ class OverworldMap {
     this.lowerImage.src = config.lowerSrc;
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
+    this.walls = null;
   }
 
   drawLowerImage(ctx, cameraPerson) {
