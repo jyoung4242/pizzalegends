@@ -9,14 +9,22 @@ class Overworld {
   startGameLoop() {
     const step = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.map.drawLowerImage(this.ctx);
+
+      const cameraPerson = this.map.gameObjects.hero;
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
           arrow: this.directionInput.direction,
         });
-        object.sprite.draw(this.ctx);
+        object.sprite.draw(this.ctx, cameraPerson);
       });
-      this.map.drawUpperImage(this.ctx);
+      this.map.drawLowerImage(this.ctx, cameraPerson);
+      Object.values(this.map.gameObjects).forEach(object => {
+        object.update({
+          arrow: this.directionInput.direction,
+        });
+        object.sprite.draw(this.ctx, cameraPerson);
+      });
+      this.map.drawUpperImage(this.ctx, cameraPerson);
 
       requestAnimationFrame(() => {
         step();
@@ -27,6 +35,7 @@ class Overworld {
 
   init() {
     this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+    console.log(this.map);
     this.directionInput = new directionInput();
     this.directionInput.init();
     this.startGameLoop();

@@ -45,7 +45,7 @@ class Sprite {
     };
     this.currentAnimation = "idle-left"; // config.currentAnimation || "idle-down";
     this.currentAnimationFrame = 0;
-    this.animationFrameLimit = config.animationFrameLimit || 8;
+    this.animationFrameLimit = config.animationFrameLimit || 16;
     this.animationFrameProgress = this.animationFrameLimit;
 
     this.gameObject = config.gameObject;
@@ -56,7 +56,7 @@ class Sprite {
   }
 
   setAnimation(key) {
-    if (this.currentAnimation != key) {
+    if (this.currentAnimation !== key) {
       this.currentAnimation = key;
       this.currentAnimationFrame = 0;
       this.animationFrameProgress = this.animationFrameLimit;
@@ -75,9 +75,9 @@ class Sprite {
     }
   }
 
-  draw(ctx) {
-    const x = this.gameObject.x - 8;
-    const y = this.gameObject.y - 18;
+  draw(ctx, cameraPerson) {
+    const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x;
+    const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
     const [frameX, frameY] = this.frame;
     this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
     this.isLoaded && ctx.drawImage(this.image, frameX * 32, frameY * 32, 32, 32, x, y, 32, 32);

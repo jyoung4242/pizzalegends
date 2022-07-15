@@ -13,7 +13,6 @@ class Person extends GameObject {
 
   updatePosition() {
     if (this.movingProgressRemaining > 0) {
-      console.log(this.direction);
       const [property, change] = this.directionUpdate[this.direction];
       this[property] += change;
       this.movingProgressRemaining -= 1;
@@ -21,15 +20,12 @@ class Person extends GameObject {
   }
 
   updateSprite(state) {
-    console.log(state.arrow, this.movingProgressRemaining);
     if (this.isPlayerControlled && this.movingProgressRemaining === 0 && !state.arrow) {
-      console.log("here");
-      this.sprite.setAnimation["idle-" + this.direction];
+      this.sprite.setAnimation("idle-" + this.direction);
       return;
     }
 
     if (this.movingProgressRemaining > 0) {
-      console.log("i shouldnotbehere");
       this.sprite.setAnimation("walk-" + this.direction);
     }
   }
