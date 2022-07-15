@@ -9,15 +9,21 @@ const utils = {
     let x = initx;
     let y = inity;
     const size = 16;
-    if (direction == "left") {
+    if (direction === "left") {
       x -= size;
-    } else if (direction == "right") {
+    } else if (direction === "right") {
       x += size;
-    } else if (direction == "up") {
+    } else if (direction === "up") {
       y -= size;
-    } else if (direction == "down") {
+    } else if (direction === "down") {
       y += size;
     }
     return { x, y };
+  },
+  emitEvent(name, detail) {
+    const event = new CustomEvent(name, {
+      detail,
+    });
+    document.dispatchEvent(event);
   },
 };

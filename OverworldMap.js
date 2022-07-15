@@ -5,7 +5,17 @@ class OverworldMap {
     this.lowerImage.src = config.lowerSrc;
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
-    this.walls = config.walls;
+    this.walls = config.walls || {};
+    this.isCutscenePlaying = false;
+  }
+
+  mountObjects() {
+    Object.keys(this.gameObjects).forEach(key => {
+      let object = this.gameObjects[key];
+      object.id = key;
+      //TODO - check if object should be mounted
+      object.mount(this);
+    });
   }
 
   drawLowerImage(ctx, cameraPerson) {
@@ -18,6 +28,18 @@ class OverworldMap {
   isSpaceTaken(currentX, currentY, direction) {
     const { x, y } = utils.nextPosition(currentX, currentY, direction);
     return this.walls[`${x},${y}`] || false;
+  }
+
+  addWall(x, y) {
+    this.walls[`${x},${y}`] = true;
+  }
+  removeWall(x, y) {
+    delete this.walls[`${x},${y}`];
+  }
+  moveWall(wasX, wasY, direction) {
+    this.removeWall(wasX, wasY);
+    const { x, y } = utils.nextPosition(wasX, wasY, direction);
+    this.addWall(x, y);
   }
 }
 
@@ -36,6 +58,24 @@ window.OverworldMaps = {
         x: utils.withGrid(7),
         y: utils.withGrid(9),
         src: "/images/characters/people/npc1.png",
+        behaviorLoop: [
+          { type: "stand", direction: "left", time: 800 },
+          { type: "stand", direction: "up", time: 800 },
+          { type: "stand", direction: "right", time: 800 },
+          { type: "stand", direction: "down", time: 800 },
+        ],
+      }),
+      npc2: new Person({
+        x: utils.withGrid(3),
+        y: utils.withGrid(7),
+        src: "/images/characters/people/npc2.png",
+        behaviorLoop: [
+          { type: "walk", direction: "left" },
+          { type: "stand", direction: "up", time: 800 },
+          { type: "walk", direction: "up" },
+          { type: "walk", direction: "right" },
+          { type: "walk", direction: "down" },
+        ],
       }),
     },
     walls: {
