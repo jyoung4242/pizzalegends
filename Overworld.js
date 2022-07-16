@@ -60,7 +60,7 @@ class Overworld {
   }
 
   init() {
-    this.startMap(window.OverworldMaps.Kitchen);
+    this.startMap(window.OverworldMaps.DemoRoom);
     this.directionInput = new directionInput();
     this.directionInput.init();
     this.bindActionInput();
@@ -69,8 +69,7 @@ class Overworld {
 
     this.map.startCutscene([
       {
-        type: "changeMap",
-        map: "DemoRoom",
+        type: "battle",
       },
     ]);
   }
