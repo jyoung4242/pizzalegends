@@ -11,6 +11,7 @@ class GameObject {
     });
     this.behaviorLoop = config.behaviorLoop || [];
     this.behaviorLoopIndex = 0;
+    this.talking = config.talking || [];
   }
 
   mount(map) {
@@ -26,7 +27,7 @@ class GameObject {
   update() {}
 
   async doBehaviorEvent(map) {
-    if (map.isCutscenePlaying || this.behaviorLoop.length === 0) return;
+    if (map.isCutscenePlaying || this.behaviorLoop.length === 0 || this.isStanding) return;
     let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
 
     eventConfig.who = this.id;

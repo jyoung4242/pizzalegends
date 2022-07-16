@@ -32,6 +32,7 @@ class OverworldEvent {
       {
         type: "walk",
         direction: this.event.direction,
+        retry: true,
       }
     );
 
@@ -43,6 +44,27 @@ class OverworldEvent {
     };
 
     document.addEventListener("PersonWalkingComplete", completeHandler);
+  }
+
+  textMessage(resolve) {
+    if (this.event.faceHero) {
+      const obj = this.map.gameObjects[this.event.faceHero];
+      obj.direction = utils.oppoDirection(this.map.gameObjects["hero"].direction);
+    }
+
+    const msg = new TextMessage({
+      text: this.event.text,
+      onComplete: () => {
+        resolve();
+      },
+    });
+
+    msg.init(document.querySelector(".game-container"));
+  }
+
+  changeMap(resolve) {
+    this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+    resolve();
   }
 
   init() {

@@ -26,4 +26,10 @@ const utils = {
     });
     document.dispatchEvent(event);
   },
+  oppoDirection(direction) {
+    if (direction === "left") return "right";
+    if (direction === "up") return "down";
+    if (direction == "down") return "up";
+    return "left";
+  },
 };
