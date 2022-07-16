@@ -60,11 +60,18 @@ class Overworld {
   }
 
   init() {
-    this.startMap(window.OverworldMaps.DemoRoom);
+    this.startMap(window.OverworldMaps.Kitchen);
     this.directionInput = new directionInput();
     this.directionInput.init();
     this.bindActionInput();
     this.bindHeroPositionCheck();
     this.startGameLoop();
+
+    this.map.startCutscene([
+      {
+        type: "changeMap",
+        map: "DemoRoom",
+      },
+    ]);
   }
 }

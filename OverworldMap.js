@@ -34,7 +34,7 @@ class OverworldMap {
 
   async startCutscene(events) {
     this.isCutscenePlaying = true;
-    console.trace("cutscene");
+
     for (let i = 0; i < events.length; i++) {
       const eventHandler = new OverworldEvent({
         event: events[i],
