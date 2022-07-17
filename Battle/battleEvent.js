@@ -23,6 +23,7 @@ class BattleEvent {
     const menuResponse = new SubmissionMenu({
       caster: this.event.caster,
       enemy: this.event.enemy,
+      items: this.battle.items,
       onComplete: submission => {
         resolve(submission);
       },
