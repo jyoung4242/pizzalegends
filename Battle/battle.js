@@ -12,7 +12,9 @@ class Battle {
           xp: 0,
           maxXp: 100,
           level: 1,
-          status: null,
+          status: {
+            type: "clumsy",
+          },
         },
         this
       ),
