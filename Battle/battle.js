@@ -1,4 +1,5 @@
 class Battle {
+  //mine
   constructor(config) {
     this.element = null;
     this.combatants = {
@@ -53,10 +54,10 @@ class Battle {
     this.element.classList.add("Battle");
     this.element.innerHTML = `
     <div class="Battle_hero">
-        <img src="/images/characters/people/hero.png" alt="hero"/>
+        <img src="${"/images/characters/people/hero.png"}" alt="hero"/>
     </div>
     <div class="Battle_enemy">
-        <img src="/images/characters/people/npc3.png" alt="enemy"/>
+        <img src="${"/images/characters/people/npc3.png"}" alt="enemy"/>
     </div>
     `;
   }
@@ -70,5 +71,16 @@ class Battle {
       combatant.id = key;
       combatant.init(this.element);
     });
+
+    this.turnCycle = new TurnCycle({
+      battle: this,
+      onNewEvent: event => {
+        return new Promise(resolve => {
+          const battleEvent = new BattleEvent(event, this);
+          battleEvent.init(resolve);
+        });
+      },
+    });
+    this.turnCycle.init();
   }
 }

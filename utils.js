@@ -32,4 +32,12 @@ const utils = {
     if (direction == "down") return "up";
     return "left";
   },
+
+  wait(ms) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, ms);
+    });
+  },
 };
