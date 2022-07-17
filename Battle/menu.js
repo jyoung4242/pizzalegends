@@ -5,8 +5,6 @@ class SubmissionMenu {
     this.onComplete = onComplete;
     this.replacements = replacements;
 
-    console.log(this.replacements);
-
     let quantityMap = {};
     items.forEach(item => {
       if (item.team === caster.team) {

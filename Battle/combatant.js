@@ -7,6 +7,7 @@ class Combatant {
   }
 
   get hpPercent() {
+    console.log(this.hp, this.maxHP);
     const percent = (this.hp / this.maxHP) * 100;
     return percent > 0 ? percent : 0;
   }

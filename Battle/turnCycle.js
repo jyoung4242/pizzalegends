@@ -71,6 +71,7 @@ class TurnCycle {
 
     //We have a dead target, but still no winner, so bring in a replacement
     if (targetDead) {
+      console.log(submission.replacement);
       const replacement = await this.onNewEvent({
         type: "replacementMenu",
         team: submission.target.team,
@@ -105,8 +106,7 @@ class TurnCycle {
       await this.onNewEvent(expiredEvent);
     }
 
-    this.currentTeam = this.currentTeam === "player" ? "enemy" : "player";
-    this.turn();
+    this.nextTurn();
   }
 
   nextTurn() {
