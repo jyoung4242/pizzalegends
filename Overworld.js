@@ -60,18 +60,13 @@ class Overworld {
   }
 
   init() {
+    this.hud = new Hud();
+    this.hud.init(this.element);
     this.startMap(window.OverworldMaps.DemoRoom);
     this.directionInput = new directionInput();
     this.directionInput.init();
     this.bindActionInput();
     this.bindHeroPositionCheck();
     this.startGameLoop();
-
-    /*     this.map.startCutscene([
-      {
-        type: "battle",
-        enemyId: "beth",
-      },
-    ]); */
   }
 }
