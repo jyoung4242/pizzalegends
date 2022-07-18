@@ -1,13 +1,14 @@
 class Combatant {
   constructor(config, battle) {
-    this.battle = battle;
     Object.keys(config).forEach(key => {
       this[key] = config[key];
     });
+    this.hp = typeof this.hp === "undefined" ? this.maxHp : this.hp;
+    this.battle = battle;
   }
 
   get hpPercent() {
-    const percent = (this.hp / this.maxHP) * 100;
+    const percent = (this.hp / this.maxHp) * 100;
     return percent > 0 ? percent : 0;
   }
 
@@ -17,6 +18,10 @@ class Combatant {
 
   get isActive() {
     return this.battle.activeCombatants[this.team] === this.id;
+  }
+
+  get givesXp() {
+    return this.level * 20;
   }
 
   createElement() {

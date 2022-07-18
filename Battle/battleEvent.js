@@ -70,13 +70,33 @@ class BattleEvent {
     fn(this.event, resolve);
   }
 
-  async stateChange(resolve) {
-    const { caster, target, damage, recover, status, action } = this.event;
-    let who = this.event.onCaster ? caster : target;
+  giveXp(resolve) {
+    let amount = this.event.xp;
+    const { combatant } = this.event;
+    const step = () => {
+      if (amount > 0) {
+        amount -= 1;
+        combatant.xp += 1;
 
-    if (action.targetType === "friendly") {
-      who = caster;
-    }
+        //Check if we've hit level up point
+        if (combatant.xp === combatant.maxXp) {
+          combatant.xp = 0;
+          combatant.maxXp = 100;
+          combatant.level += 1;
+        }
+
+        combatant.update();
+        requestAnimationFrame(step);
+        return;
+      }
+      resolve();
+    };
+    requestAnimationFrame(step);
+  }
+
+  async stateChange(resolve) {
+    const { caster, target, damage, recover, status } = this.event;
+    let who = this.event.onCaster ? caster : target;
 
     if (damage) {
       //modify the target to have less HP
