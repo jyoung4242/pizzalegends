@@ -32,9 +32,11 @@ class Overworld {
         });
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
-      requestAnimationFrame(() => {
-        step();
-      });
+      if (!this.map.isPaused) {
+        requestAnimationFrame(() => {
+          step();
+        });
+      }
     };
     step();
   }
@@ -49,7 +51,12 @@ class Overworld {
 
   bindActionInput() {
     new KeyPressListener("Enter", () => {
-      this.map.checkForActionCutscenes();
+      this.map.checkForActionCutscene();
+    });
+    new KeyPressListener("Escape", () => {
+      if (!this.map.isCutscenePlaying) {
+        this.map.startCutscene([{ type: "pause" }]);
+      }
     });
   }
 
@@ -62,6 +69,7 @@ class Overworld {
   init() {
     this.hud = new Hud();
     this.hud.init(this.element);
+
     this.startMap(window.OverworldMaps.DemoRoom);
     this.directionInput = new directionInput();
     this.directionInput.init();
